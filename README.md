@@ -14,3 +14,7 @@ MySQL database </br>
 Apache Tomcat </br>
 Postman
 
+### Architecture </br>
+![image](![image](https://github.com/jagruti1998/Blog-REST-API/assets/50023337/0e023e7c-4f40-410e-930f-09f7c4b82e12)
+)
+
