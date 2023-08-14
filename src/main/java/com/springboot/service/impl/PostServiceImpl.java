@@ -66,24 +66,42 @@ public class PostServiceImpl implements PostService {
     public PostDto getPostById(long id) {//retrive post entity by id
         Post post= postRepository.findById(id)//declare post object call postRepository, which provides findById() method
                 .orElseThrow(() -> new ResourceNotFoundException("Post","id",id));//if object does not exist to given id we use throw exception
-      //  pass lambda expression and throw ResourceNotFoundException and pass parameters
+        //  pass lambda expression and throw ResourceNotFoundException and pass parameters
 
         return mapToDto(post);//convert post entity to dto
     }
 
     @Override
     public PostDto updatePost(PostDto postDto, long id) {
-        //get post by id from the db
-        Post post= postRepository.findById(id)//declare post object call postRepository, which provides findById() method
-                .orElseThrow(() -> new ResourceNotFoundException("Post","id",id));//if object does not exist to given id we use throw exception
+        // get post by id from the database
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 
-        post.setTitle(postDto.getTitle());//set all the updated values to post entity
+        post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         post.setContent(postDto.getContent());
 
-        Post updatePost=postRepository.save((post));//save the updated post into db
-        return mapToDto(updatePost);//convert updated post to dto
+        Post updatedPost = postRepository.save(post);
+        return mapToDTO(updatedPost);
     }
+
+
+    @Override
+    public void deletePostById(long id) {
+        // get post by id from the database
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        postRepository.delete(post);
+    }
+
+    // convert Entity into DTO
+    private PostDto mapToDTO(Post post){
+        PostDto postDto = new PostDto();
+        postDto.setId(post.getId());
+        postDto.setTitle(post.getTitle());
+        postDto.setDescription(post.getDescription());
+        postDto.setContent(post.getContent());
+        return postDto;
+    }
+
 
     //converted entity into Dto
     private PostDto mapToDto(Post post){
