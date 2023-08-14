@@ -2,6 +2,7 @@ package com.springboot.service.impl;
 
 import com.springboot.dtos.PostDto;
 import com.springboot.entity.Post;
+import com.springboot.exception.ResourceNotFoundException;
 import com.springboot.repository.PostRepository;
 import com.springboot.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,16 @@ public class PostServiceImpl implements PostService {
         // and collect them into a list of PostDto
         return posts.stream().map(post -> mapToDto(post))// Transform each Post to PostDto
                 .collect(Collectors.toList());//Collect into a List<PostDto>
+    }
+
+    //
+    @Override
+    public PostDto getPostById(long id) {//retrive post entity by id
+        Post post= postRepository.findById(id)//declare post object call postRepository, which provides findById() method
+                .orElseThrow(() -> new ResourceNotFoundException("Post","id",id));//if object does not exist to given id we use throw exception
+      //  pass lambda expression and throw ResourceNotFoundException and pass parameters
+
+        return mapToDto(post);//convert post entity to dto
     }
 
     //converted entity into Dto
