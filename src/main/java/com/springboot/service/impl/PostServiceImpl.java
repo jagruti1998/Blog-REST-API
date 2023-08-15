@@ -1,6 +1,7 @@
 package com.springboot.service.impl;
 
 import com.springboot.dtos.PostDto;
+import com.springboot.dtos.PostResponse;
 import com.springboot.entity.Post;
 import com.springboot.exception.ResourceNotFoundException;
 import com.springboot.repository.PostRepository;
@@ -54,7 +55,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public List<PostDto> getAllPosts(int pageNo,int pageSize) {
+    public PostResponse getAllPosts(int pageNo,int pageSize) {
 
         //create pageable instance
         Pageable pageable = PageRequest.of(pageNo,pageSize);
@@ -67,8 +68,19 @@ public class PostServiceImpl implements PostService {
 
         // Use the Stream API to transform each Post entity into a PostDto
         // and collect them into a list of PostDto
-        return listOfPosts.stream().map(post -> mapToDto(post))// Transform each Post to PostDto
+        List<PostDto> content= listOfPosts.stream().map(post -> mapToDto(post))// Transform each Post to PostDto
                 .collect(Collectors.toList());//Collect into a List<PostDto>
+
+        PostResponse postResponse=new PostResponse();//created postResponse object
+
+        postResponse.setContent(content);//set all the required details
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+
+        return postResponse;
     }
 
     //
