@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 public class BlogRestApiApplication {
 
 	@Bean
-	public ModelMapper modelMapper(){
+	public ModelMapper modelMapper(){ //defining model mapper bean
 		return new ModelMapper();
 
 	}
