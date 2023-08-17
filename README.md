@@ -18,10 +18,10 @@ Postman
 
 ## Features
 - User Login / Signup 
-- Create Blog / post
+- Create a Blog/post
 - CRUD Operation on POST
-- Comment on post
-- CRUD Operation on comment
+- Comment on the post
+- CRUD Operation on the comment
 - Pagination
 _ Search By USER
 - Search By Category
@@ -33,18 +33,17 @@ _ Search By USER
 - Stored Data in MySQL
 - Authentication of Login
 - Input Validation
-- Server side pagination
+- Server-side pagination
 
 
 ### Architecture </br>
 ![image](https://github.com/jagruti1998/Blog-REST-API/assets/50023337/0e023e7c-4f40-410e-930f-09f7c4b82e12)
 
-### ER Diagram </br>
-![image]()
+
 
 ## Installation & Run
  - Before running the API server, we should update the database config inside the application.properties file.
- - Update the port number, username and password as per our local database config.  
+ - Update the port number, username, and password as per our local database config.  
     - server.port=8080
     - spring.datasource.url=jdbc:mysql://localhost:3306/myblog
     - spring.datasource.username=root
