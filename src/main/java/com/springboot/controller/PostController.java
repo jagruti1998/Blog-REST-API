@@ -6,6 +6,7 @@ import com.springboot.service.PostService;
 import com.springboot.utils.AppConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/api/v1/posts") //base uri path
 @Tag(name = "CRUD REST APIs for Post Resource")
 public class PostController {
 
@@ -29,15 +30,19 @@ public class PostController {
 
     @Operation(
             summary = "Create Post REST API",
-            description = "Create Post REST API is used to save into database"
+            description = "Create Post REST API is used to save post into database"
     )
     @ApiResponse(
             responseCode = "201",
             description = "Http Status 201 created"
     )
 
-    //ceate blogpost RESTAPI
-    @PreAuthorize("hasRole('ADMIN')")
+    //security for swagger
+    @SecurityRequirement(
+            name = "Bear Authentication"
+    )
+    //create blogpost RESTAPI
+    @PreAuthorize("hasRole('ADMIN')")//only admin user can access create post api
     @PostMapping
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){//created a method to create Post and providedPostDto as parameter
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);//returning ResponseEntity object
@@ -92,6 +97,11 @@ public class PostController {
             description = "Http Status 200 success"
     )
 
+
+    @SecurityRequirement(
+            name = "Bear Authentication"
+    )
+
     // update post by id rest api
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
@@ -110,6 +120,11 @@ public class PostController {
     @ApiResponse(
             responseCode = "200",
             description = "Http Status 200 success"
+    )
+
+
+    @SecurityRequirement(
+            name="Bear Authentication"
     )
 
     // delete post rest api

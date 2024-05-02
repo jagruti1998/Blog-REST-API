@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 
     }
 
-
+//spring security
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorDetails> handleAccessDeniedException(AccessDeniedException exception, WebRequest webRequest){
 

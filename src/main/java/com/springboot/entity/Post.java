@@ -28,4 +28,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,orphanRemoval = true)//eg. if we save the parent child also gets saved
     private Set<Comment> comments=new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY) //many post have one category
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
